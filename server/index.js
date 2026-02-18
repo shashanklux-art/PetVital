@@ -15,6 +15,9 @@ const exportRoutes = require('./routes/export');
 
 const app = express();
 
+// Trust proxy (required for Vercel / reverse proxies)
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
   contentSecurityPolicy: {
