@@ -69,7 +69,7 @@ app.use('/api/export', exportRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString(), localMode: process.env.LOCAL_MODE });
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Serve index.html for all non-API routes (SPA fallback)
