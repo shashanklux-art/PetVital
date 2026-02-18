@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Vets | PetVital</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header header-app">
+    <div class="container">
+      <a href="/dashboard.html" class="logo">
+        <span class="logo-icon">🐾</span>
+        PetVital
+      </a>
+      <nav class="nav nav-app">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/pets.html" class="nav-link">My Pets</a>
+        <a href="/history.html" class="nav-link">History</a>
+        <a href="/journal.html" class="nav-link">Journal</a>
+        <a href="/vets.html" class="nav-link active">Find Vets</a>
+        <button class="btn btn-secondary btn-small" id="logout-btn">Log Out</button>
+      </nav>
+      <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="/dashboard.html" class="nav-link">Dashboard</a>
+    <a href="/pets.html" class="nav-link">My Pets</a>
+    <a href="/history.html" class="nav-link">History</a>
+    <a href="/journal.html" class="nav-link">Journal</a>
+    <a href="/vets.html" class="nav-link active">Find Vets</a>
+    <button class="btn btn-secondary btn-full" id="mobile-logout-btn">Log Out</button>
+  </nav>
+
+  <main class="page-content">
+    <div class="container">
+      <div class="page-header">
+        <h1>Find a Vet</h1>
+      </div>
+
+      <div class="vet-search card">
+        <div class="filters">
+          <div class="filter-group">
+            <label for="filter-city">City</label>
+            <input type="text" id="filter-city" placeholder="Enter city name...">
+          </div>
+          <div class="filter-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="filter-emergency">
+              Emergency Only
+            </label>
+          </div>
+          <div class="filter-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="filter-24hour">
+              24 Hour
+            </label>
+          </div>
+          <button class="btn btn-primary" id="search-btn">Search</button>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <a href="https://www.google.com/maps/search/emergency+vet+near+me" target="_blank" class="btn btn-danger">
+          Find Emergency Vet Near Me (Google Maps)
+        </a>
+      </div>
+
+      <div class="vets-list" id="vets-list">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading vet clinics...</p>
+        </div>
+      </div>
+
+      <p class="vet-disclaimer">
+        <strong>Note:</strong> This is a demo list of vet clinics. In a production app, this would integrate with a real vet clinic database or Google Places API.
+      </p>
+    </div>
+  </main>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/vets.js"></script>
+</body>
+</html>

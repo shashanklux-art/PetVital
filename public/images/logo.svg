@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="50" cy="50" r="45" fill="#4F46E5"/>
+  <g fill="white">
+    <!-- Paw pad main -->
+    <ellipse cx="50" cy="58" rx="18" ry="16"/>
+    <!-- Toe pads -->
+    <circle cx="32" cy="42" r="8"/>
+    <circle cx="68" cy="42" r="8"/>
+    <circle cx="40" cy="30" r="7"/>
+    <circle cx="60" cy="30" r="7"/>
+  </g>
+  <!-- Heart in center -->
+  <path d="M50 52 C45 47 38 47 38 53 C38 59 50 67 50 67 C50 67 62 59 62 53 C62 47 55 47 50 52" fill="#DC2626"/>
+</svg>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symptom Check | PetVital</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header header-app">
+    <div class="container">
+      <a href="/dashboard.html" class="logo">
+        <span class="logo-icon">🐾</span>
+        PetVital
+      </a>
+      <nav class="nav nav-app">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/pets.html" class="nav-link">My Pets</a>
+        <a href="/history.html" class="nav-link">History</a>
+        <a href="/journal.html" class="nav-link">Journal</a>
+        <a href="/vets.html" class="nav-link">Find Vets</a>
+        <button class="btn btn-secondary btn-small" id="logout-btn">Log Out</button>
+      </nav>
+      <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="/dashboard.html" class="nav-link">Dashboard</a>
+    <a href="/pets.html" class="nav-link">My Pets</a>
+    <a href="/history.html" class="nav-link">History</a>
+    <a href="/journal.html" class="nav-link">Journal</a>
+    <a href="/vets.html" class="nav-link">Find Vets</a>
+    <button class="btn btn-secondary btn-full" id="mobile-logout-btn">Log Out</button>
+  </nav>
+
+  <main class="page-content">
+    <div class="container container-small">
+      <h1>Symptom Check</h1>
+
+      <!-- Progress indicator -->
+      <div class="triage-progress">
+        <div class="progress-step active" data-step="1">
+          <span class="step-number">1</span>
+          <span class="step-label">Select Pet</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="2">
+          <span class="step-number">2</span>
+          <span class="step-label">Symptoms</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-step" data-step="3">
+          <span class="step-number">3</span>
+          <span class="step-label">Results</span>
+        </div>
+      </div>
+
+      <!-- Step 1: Select Pet -->
+      <div id="step-1" class="triage-step card">
+        <h2>Which pet needs a check-up?</h2>
+        <div class="pet-select" id="pet-select">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading pets...</p>
+          </div>
+        </div>
+        <p class="empty-state" id="no-pets" style="display: none;">
+          You haven't added any pets yet. <a href="/add-pet.html">Add your first pet</a>
+        </p>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="next-step-1" disabled>Continue</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Symptoms -->
+      <div id="step-2" class="triage-step card" style="display: none;">
+        <h2>What symptoms is <span id="pet-name-display"></span> showing?</h2>
+
+        <div class="symptoms-categories" id="symptoms-categories">
+          <!-- Categories populated by JS -->
+        </div>
+
+        <div class="form-group">
+          <label for="duration">How long has this been going on?</label>
+          <select id="duration">
+            <option value="just_started">Just started (within hours)</option>
+            <option value="one_day">About 1 day</option>
+            <option value="few_days">2-3 days</option>
+            <option value="week_plus">More than a week</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="severity">How severe does it seem?</label>
+          <select id="severity">
+            <option value="mild">Mild - slight change from normal</option>
+            <option value="moderate">Moderate - noticeable distress</option>
+            <option value="severe">Severe - significant distress or pain</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Additional details (optional)</label>
+          <textarea id="notes" placeholder="Anything else you've noticed..."></textarea>
+        </div>
+
+        <div class="disclaimer-checkbox">
+          <label>
+            <input type="checkbox" id="disclaimer-agree" required>
+            <span>I understand this is not veterinary advice and I should consult a vet for proper diagnosis and treatment.</span>
+          </label>
+        </div>
+
+        <div class="selected-symptoms" id="selected-symptoms">
+          <h4>Selected symptoms: <span id="symptom-count">0</span></h4>
+          <div id="symptom-tags"></div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-secondary" id="prev-step-2">Back</button>
+          <button class="btn btn-primary" id="submit-triage" disabled>Get Assessment</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Results -->
+      <div id="step-3" class="triage-step" style="display: none;">
+        <div id="triage-result">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Loading state -->
+      <div id="loading" class="loading-state card" style="display: none;">
+        <div class="spinner spinner-large"></div>
+        <p>Analyzing symptoms...</p>
+        <p class="loading-subtext">This may take a few seconds</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/triage.js"></script>
+</body>
+</html>

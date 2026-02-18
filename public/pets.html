@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Pets | PetVital</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header header-app">
+    <div class="container">
+      <a href="/dashboard.html" class="logo">
+        <span class="logo-icon">🐾</span>
+        PetVital
+      </a>
+      <nav class="nav nav-app">
+        <a href="/dashboard.html" class="nav-link">Dashboard</a>
+        <a href="/pets.html" class="nav-link active">My Pets</a>
+        <a href="/history.html" class="nav-link">History</a>
+        <a href="/journal.html" class="nav-link">Journal</a>
+        <a href="/vets.html" class="nav-link">Find Vets</a>
+        <button class="btn btn-secondary btn-small" id="logout-btn">Log Out</button>
+      </nav>
+      <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="/dashboard.html" class="nav-link">Dashboard</a>
+    <a href="/pets.html" class="nav-link active">My Pets</a>
+    <a href="/history.html" class="nav-link">History</a>
+    <a href="/journal.html" class="nav-link">Journal</a>
+    <a href="/vets.html" class="nav-link">Find Vets</a>
+    <button class="btn btn-secondary btn-full" id="mobile-logout-btn">Log Out</button>
+  </nav>
+
+  <main class="page-content">
+    <div class="container">
+      <div class="page-header">
+        <h1>My Pets</h1>
+        <a href="/add-pet.html" class="btn btn-primary">+ Add Pet</a>
+      </div>
+
+      <div class="pets-grid pets-grid-large" id="pets-grid">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading pets...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Pet Modal -->
+  <div class="modal" id="edit-pet-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Pet</h2>
+        <button class="modal-close" id="close-modal">&times;</button>
+      </div>
+      <form id="edit-pet-form" class="form">
+        <input type="hidden" id="edit-pet-id">
+        <div class="form-group">
+          <label for="edit-name">Pet's Name *</label>
+          <input type="text" id="edit-name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="edit-species">Species *</label>
+          <select id="edit-species" name="species" required>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-breed">Breed</label>
+          <input type="text" id="edit-breed" name="breed">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-age-years">Age (Years)</label>
+            <input type="number" id="edit-age-years" name="age_years" min="0" max="30">
+          </div>
+          <div class="form-group">
+            <label for="edit-age-months">Age (Months)</label>
+            <input type="number" id="edit-age-months" name="age_months" min="0" max="11">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="edit-weight">Weight (kg)</label>
+          <input type="number" id="edit-weight" name="weight_kg" min="0" step="0.1">
+        </div>
+        <div class="form-group">
+          <label for="edit-conditions">Known Conditions</label>
+          <textarea id="edit-conditions" name="known_conditions" placeholder="Separate with commas"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="edit-medications">Current Medications</label>
+          <textarea id="edit-medications" name="medications" placeholder="Separate with commas"></textarea>
+        </div>
+        <div class="form-error" id="edit-form-error"></div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="delete-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content modal-small">
+      <div class="modal-header">
+        <h2>Delete Pet</h2>
+        <button class="modal-close" id="close-delete-modal">&times;</button>
+      </div>
+      <p>Are you sure you want to delete <strong id="delete-pet-name"></strong>? This will also delete all associated health records and journal entries. This action cannot be undone.</p>
+      <div class="form-actions">
+        <button class="btn btn-secondary" id="cancel-delete">Cancel</button>
+        <button class="btn btn-danger" id="confirm-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/pets.js"></script>
+</body>
+</html>
