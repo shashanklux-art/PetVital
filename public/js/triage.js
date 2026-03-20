@@ -42,7 +42,7 @@ async function loadPets() {
       <label class="pet-select-option">
         <input type="radio" name="pet" value="${pet.id}">
         <div class="pet-select-card">
-          <div class="pet-icon">${pet.species === 'dog' ? '🐕' : '🐈'}</div>
+          <div class="pet-icon">${pet.photo_url ? `<img src="${pet.photo_url}" alt="${escapeHtml(pet.name)}" class="pet-avatar-img-sm">` : (pet.species === 'dog' ? '🐕' : '🐈')}</div>
           <div>${escapeHtml(pet.name)}</div>
         </div>
       </label>
@@ -88,6 +88,10 @@ function initStepNavigation() {
 
   // Disclaimer checkbox
   document.getElementById('disclaimer-agree')?.addEventListener('change', (e) => {
+    updateSubmitButton();
+  });
+
+  document.getElementById('free-text')?.addEventListener('input', () => {
     updateSubmitButton();
   });
 }
@@ -167,7 +171,8 @@ function updateSelectedSymptoms() {
 function updateSubmitButton() {
   const disclaimerChecked = document.getElementById('disclaimer-agree').checked;
   const hasSymptoms = selectedSymptoms.length > 0;
-  document.getElementById('submit-triage').disabled = !(disclaimerChecked && hasSymptoms);
+  const hasFreeText = document.getElementById('free-text').value.trim().length > 0;
+  document.getElementById('submit-triage').disabled = !(disclaimerChecked && (hasSymptoms || hasFreeText));
 }
 
 // Submit triage
@@ -185,7 +190,8 @@ async function submitTriage() {
       symptoms: selectedSymptoms,
       duration: document.getElementById('duration').value,
       severity: document.getElementById('severity').value,
-      notes: document.getElementById('notes').value
+      notes: document.getElementById('notes').value,
+      free_text: document.getElementById('free-text').value.trim()
     };
 
     const response = await triageApi.submit(triageData);
@@ -357,6 +363,7 @@ function startNewCheck() {
   document.getElementById('duration').value = 'just_started';
   document.getElementById('severity').value = 'mild';
   document.getElementById('notes').value = '';
+  document.getElementById('free-text').value = '';
   document.getElementById('disclaimer-agree').checked = false;
 
   // Reset pet selection

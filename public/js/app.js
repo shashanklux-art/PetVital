@@ -60,7 +60,10 @@ function renderPets(pets, container) {
 
   container.innerHTML = pets.map(pet => `
     <div class="pet-card">
-      <div class="pet-icon">${pet.species === 'dog' ? '🐕' : '🐈'}</div>
+      ${pet.photo_url
+        ? `<img src="${pet.photo_url}" alt="${escapeHtml(pet.name)}" class="pet-avatar-img">`
+        : `<div class="pet-icon">${pet.species === 'dog' ? '🐕' : '🐈'}</div>`
+      }
       <h3>${escapeHtml(pet.name)}</h3>
       <p>${escapeHtml(pet.breed) || capitalize(pet.species)}</p>
       ${pet.age_years || pet.age_months ? `<p>${formatAge(pet.age_years, pet.age_months)}</p>` : ''}
@@ -93,7 +96,7 @@ function renderRecentHistory(history, container) {
   container.innerHTML = history.map(item => {
     const response = JSON.parse(item.ai_response);
     return `
-      <div class="history-card" onclick="window.location.href='/history.html'">
+      <div class="history-card" data-link="/history.html">
         <div class="history-card-header">
           <span class="urgency-badge urgency-${item.urgency_level}">${item.urgency_level}</span>
           <span class="history-date">${formatDate(item.created_at)}</span>
@@ -105,6 +108,11 @@ function renderRecentHistory(history, container) {
       </div>
     `;
   }).join('');
+
+  container.querySelectorAll('[data-link]').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => window.location.href = el.dataset.link);
+  });
 }
 
 // Load recent journal entries
@@ -129,7 +137,7 @@ function renderRecentJournal(entries, container) {
   }
 
   container.innerHTML = entries.map(entry => `
-    <div class="journal-card" onclick="window.location.href='/journal.html'">
+    <div class="journal-card" data-link="/journal.html">
       <div class="journal-card-header">
         <span class="entry-type-badge ${entry.entry_type}">${ENTRY_TYPE_LABELS[entry.entry_type] || entry.entry_type}</span>
         <span class="history-date">${formatDate(entry.entry_date)}</span>
@@ -141,6 +149,11 @@ function renderRecentJournal(entries, container) {
       </div>
     </div>
   `).join('');
+
+  container.querySelectorAll('[data-link]').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => window.location.href = el.dataset.link);
+  });
 }
 
 // Helper functions

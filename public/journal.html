@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Journal | PetVital</title>
+  <title>Journal | Pet Parent</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
     <div class="container">
       <a href="/dashboard.html" class="logo">
         <span class="logo-icon">🐾</span>
-        PetVital
+        Pet Parent
       </a>
       <nav class="nav nav-app">
         <a href="/dashboard.html" class="nav-link">Dashboard</a>
@@ -23,6 +23,7 @@
         <a href="/history.html" class="nav-link">History</a>
         <a href="/journal.html" class="nav-link active">Journal</a>
         <a href="/vets.html" class="nav-link">Find Vets</a>
+        <a href="/chat.html" class="nav-link">Pet Chat</a>
         <button class="btn btn-secondary btn-small" id="logout-btn">Log Out</button>
       </nav>
       <button class="mobile-menu-btn" id="mobile-menu-btn">
@@ -39,6 +40,7 @@
     <a href="/history.html" class="nav-link">History</a>
     <a href="/journal.html" class="nav-link active">Journal</a>
     <a href="/vets.html" class="nav-link">Find Vets</a>
+    <a href="/chat.html" class="nav-link">Pet Chat</a>
     <button class="btn btn-secondary btn-full" id="mobile-logout-btn">Log Out</button>
   </nav>
 
@@ -119,6 +121,17 @@
         <div class="form-group">
           <label for="entry-content">Details</label>
           <textarea id="entry-content" rows="4" placeholder="Describe what happened..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Photo Attachment</label>
+          <div class="photo-upload-area photo-upload-small" id="journal-photo-area">
+            <div class="photo-preview" id="journal-photo-preview">
+              <span class="photo-placeholder">📷</span>
+              <span>Attach Photo</span>
+            </div>
+            <input type="file" id="journal-photo-input" accept="image/*" style="display: none;">
+          </div>
         </div>
 
         <!-- Type-specific fields -->

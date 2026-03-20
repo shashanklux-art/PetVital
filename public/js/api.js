@@ -1,14 +1,28 @@
-// API helper functions (auth disabled for MVP)
+// API helper functions
 
-// Make API request — no auth token needed
 async function apiRequest(endpoint, options = {}) {
+  const token = localStorage.getItem('auth_token');
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...options.headers
+  };
+
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const response = await fetch(`${CONFIG.API_BASE_URL}${endpoint}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers
-    }
+    headers
   });
+
+  if (response.status === 401) {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+    window.location.href = '/login.html';
+    return;
+  }
 
   const data = await response.json();
 
@@ -83,13 +97,35 @@ const vetsApi = {
 // Export PDF
 const exportApi = {
   triagePdf: async (id) => {
-    const response = await fetch(`${CONFIG.API_BASE_URL}/export/triage/${id}`);
+    const token = localStorage.getItem('auth_token');
+    const response = await fetch(`${CONFIG.API_BASE_URL}/export/triage/${id}`, {
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+    });
     return response.blob();
   },
   petSummaryPdf: async (petId) => {
-    const response = await fetch(`${CONFIG.API_BASE_URL}/export/pet/${petId}/summary`);
+    const token = localStorage.getItem('auth_token');
+    const response = await fetch(`${CONFIG.API_BASE_URL}/export/pet/${petId}/summary`, {
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+    });
     return response.blob();
   }
+};
+
+// Upload
+const uploadApi = {
+  upload: (imageData, filename) => apiRequest('/upload', {
+    method: 'POST',
+    body: JSON.stringify({ image: imageData, filename })
+  })
+};
+
+// Chat (placeholder for Workstream D)
+const chatApi = {
+  send: (message, history) => apiRequest('/chat', {
+    method: 'POST',
+    body: JSON.stringify({ message, history })
+  })
 };
 
 // Download blob as file

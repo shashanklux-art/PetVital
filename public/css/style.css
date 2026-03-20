@@ -6,10 +6,15 @@
 }
 
 :root {
-  /* Colors */
-  --color-primary: #4F46E5;
-  --color-primary-dark: #4338CA;
-  --color-primary-light: #6366F1;
+  /* Colors — Pet Parent Pro brand */
+  --color-primary: #6B35A3;
+  --color-primary-dark: #5A2B8C;
+  --color-primary-light: #8B5CC0;
+  --color-accent: #7EEDC6;
+  --color-accent-dark: #5DDBA8;
+  --color-accent-light: #B8E8D0;
+  --color-lavender: #D4B8E0;
+  --color-beige: #D4C5A9;
   --color-secondary: #6B7280;
   --color-success: #22C55E;
   --color-success-light: #86EFAC;
@@ -20,10 +25,10 @@
   --color-orange: #F97316;
   --color-orange-light: #FDBA74;
 
-  /* Neutrals */
+  /* Neutrals (warm-tinted) */
   --color-white: #FFFFFF;
-  --color-gray-50: #F9FAFB;
-  --color-gray-100: #F3F4F6;
+  --color-gray-50: #FAF9F7;
+  --color-gray-100: #F5F3F0;
   --color-gray-200: #E5E7EB;
   --color-gray-300: #D1D5DB;
   --color-gray-400: #9CA3AF;
@@ -200,7 +205,7 @@ body {
 .hero {
   padding: var(--spacing-3xl) 0;
   text-align: center;
-  background: linear-gradient(to bottom, var(--color-white), var(--color-gray-50));
+  background: linear-gradient(to bottom, var(--color-white), var(--color-accent-light));
 }
 
 .hero h1 {
@@ -230,6 +235,10 @@ section h2 {
   text-align: center;
   margin-bottom: var(--spacing-xl);
   color: var(--color-gray-900);
+}
+
+.how-it-works {
+  background: linear-gradient(to bottom, var(--color-gray-50), #EDE8E0);
 }
 
 /* Steps */
@@ -304,7 +313,7 @@ section h2 {
 
 /* CTA Section */
 .cta {
-  background: linear-gradient(135deg, var(--color-primary), #7C3AED);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   color: var(--color-white);
   text-align: center;
   padding: var(--spacing-3xl) 0;
@@ -321,8 +330,8 @@ section h2 {
 
 /* Footer */
 .footer {
-  background: var(--color-gray-800);
-  color: var(--color-gray-300);
+  background: var(--color-primary-dark);
+  color: var(--color-lavender);
   padding: var(--spacing-xl) 0;
   margin-top: var(--spacing-3xl);
   text-align: center;
@@ -342,18 +351,19 @@ section h2 {
 }
 
 .footer-links a {
-  color: var(--color-gray-400);
+  color: var(--color-accent-light);
   text-decoration: none;
   font-size: var(--font-size-sm);
 }
 
 .footer-links a:hover {
-  color: var(--color-white);
+  color: var(--color-accent);
 }
 
 .copyright {
   font-size: var(--font-size-xs);
-  color: var(--color-gray-500);
+  color: var(--color-lavender);
+  opacity: 0.7;
 }
 
 /* Page content */
@@ -408,7 +418,7 @@ section h2 {
 }
 
 .dashboard-cta {
-  background: linear-gradient(135deg, var(--color-primary), #7C3AED);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   border-radius: var(--radius-lg);
   padding: var(--spacing-2xl);
   margin-bottom: var(--spacing-2xl);

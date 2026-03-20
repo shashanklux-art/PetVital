@@ -21,7 +21,7 @@ const store = {
 const demoUserId = uuid();
 const demoUser = {
   id: demoUserId,
-  email: 'demo@petvital.app',
+  email: 'demo@petparent.cc',
   password: 'demo123', // In real app, this would be hashed
   user_metadata: { full_name: 'Demo User' },
   created_at: new Date().toISOString()
@@ -48,6 +48,15 @@ const demoPets = [
     weight_kg: 32,
     known_conditions: ['Hip dysplasia'],
     medications: ['Joint supplement'],
+    diet: 'dry',
+    is_fixed: 'yes',
+    last_vet_visit: '2026-01-15',
+    recent_vaccines: 'Rabies, DHPP',
+    indoor_outdoor: 'both',
+    supplements: 'Fish oil',
+    travel_history: '',
+    recent_procedures: 'Dental cleaning (Jan 2026)',
+    photo_url: null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   },
@@ -62,6 +71,15 @@ const demoPets = [
     weight_kg: 4.5,
     known_conditions: [],
     medications: [],
+    diet: 'wet',
+    is_fixed: 'yes',
+    last_vet_visit: '2025-11-20',
+    recent_vaccines: 'FVRCP',
+    indoor_outdoor: 'indoor',
+    supplements: '',
+    travel_history: '',
+    recent_procedures: '',
+    photo_url: null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   }

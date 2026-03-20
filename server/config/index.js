@@ -2,12 +2,10 @@ require('dotenv').config();
 
 module.exports = {
   port: process.env.PORT || 3000,
-  supabase: {
-    url: process.env.SUPABASE_URL,
-    anonKey: process.env.SUPABASE_ANON_KEY,
-    serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY
-  },
+  databaseUrl: process.env.DATABASE_URL,
+  jwtSecret: process.env.JWT_SECRET || 'dev-secret-change-in-production',
   openai: {
     apiKey: process.env.OPENAI_API_KEY
-  }
+  },
+  blobToken: process.env.BLOB_READ_WRITE_TOKEN
 };

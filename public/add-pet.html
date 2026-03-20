@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Pet | PetVital</title>
+  <title>Add Pet | Pet Parent</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
     <div class="container">
       <a href="/dashboard.html" class="logo">
         <span class="logo-icon">🐾</span>
-        PetVital
+        Pet Parent
       </a>
       <nav class="nav nav-app">
         <a href="/dashboard.html" class="nav-link">Dashboard</a>
@@ -23,6 +23,7 @@
         <a href="/history.html" class="nav-link">History</a>
         <a href="/journal.html" class="nav-link">Journal</a>
         <a href="/vets.html" class="nav-link">Find Vets</a>
+        <a href="/chat.html" class="nav-link">Pet Chat</a>
         <button class="btn btn-secondary btn-small" id="logout-btn">Log Out</button>
       </nav>
       <button class="mobile-menu-btn" id="mobile-menu-btn">
@@ -39,6 +40,7 @@
     <a href="/history.html" class="nav-link">History</a>
     <a href="/journal.html" class="nav-link">Journal</a>
     <a href="/vets.html" class="nav-link">Find Vets</a>
+    <a href="/chat.html" class="nav-link">Pet Chat</a>
     <button class="btn btn-secondary btn-full" id="mobile-logout-btn">Log Out</button>
   </nav>
 
@@ -50,6 +52,14 @@
       </div>
 
       <form id="pet-form" class="form card">
+        <div class="photo-upload-area" id="photo-upload-area">
+          <div class="photo-preview" id="photo-preview">
+            <span class="photo-placeholder">📷</span>
+            <span>Add Pet Photo</span>
+          </div>
+          <input type="file" id="photo-input" accept="image/*" style="display: none;">
+        </div>
+
         <div class="form-group">
           <label for="name">Pet's Name *</label>
           <input type="text" id="name" name="name" required placeholder="e.g., Max, Luna">
@@ -106,6 +116,81 @@
           <label for="medications">Current Medications</label>
           <textarea id="medications" name="medications" placeholder="e.g., insulin, joint supplements (separate with commas)"></textarea>
           <span class="form-hint">Any medications your pet is currently taking</span>
+        </div>
+
+        <div class="additional-details-section">
+          <button type="button" class="additional-details-toggle" id="toggle-details">
+            Additional Details (optional) <span class="toggle-icon">▼</span>
+          </button>
+          <div class="additional-details-content" id="additional-details" style="display: none;">
+            <div class="form-group">
+              <label for="diet">Diet</label>
+              <select id="diet" name="diet">
+                <option value="">Select diet type...</option>
+                <option value="dry">Dry Food</option>
+                <option value="wet">Wet Food</option>
+                <option value="raw">Raw Diet</option>
+                <option value="mixed">Mixed</option>
+                <option value="prescription">Prescription Diet</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Spayed/Neutered</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="is_fixed" value="yes"> Yes
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="is_fixed" value="no"> No
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="is_fixed" value="unknown" checked> Unknown
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="last_vet_visit">Last Vet Visit</label>
+              <input type="date" id="last_vet_visit" name="last_vet_visit">
+            </div>
+
+            <div class="form-group">
+              <label for="recent_vaccines">Recent Vaccines</label>
+              <textarea id="recent_vaccines" name="recent_vaccines" placeholder="e.g., Rabies (Jan 2026), DHPP (Mar 2025)"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Indoor/Outdoor</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="indoor_outdoor" value="indoor" checked> Indoor
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="indoor_outdoor" value="outdoor"> Outdoor
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="indoor_outdoor" value="both"> Both
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="supplements">Supplements</label>
+              <textarea id="supplements" name="supplements" placeholder="e.g., Fish oil, Probiotics"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="travel_history">Travel History</label>
+              <textarea id="travel_history" name="travel_history" placeholder="Recent travel or boarding"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="recent_procedures">Recent Procedures</label>
+              <textarea id="recent_procedures" name="recent_procedures" placeholder="e.g., Dental cleaning, Surgery"></textarea>
+            </div>
+          </div>
         </div>
 
         <div class="form-error" id="form-error"></div>

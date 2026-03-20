@@ -4,6 +4,7 @@ let allEntries = [];
 let pets = [];
 let selectedEntryId = null;
 let isEditing = false;
+let journalPhotoData = null;
 
 // Initialize journal page
 async function initJournalPage() {
@@ -89,17 +90,26 @@ function renderEntries(entries) {
         <h3>${escapeHtml(entry.pets?.name || 'Pet')}</h3>
         ${entry.title ? `<p><strong>${escapeHtml(entry.title)}</strong></p>` : ''}
         ${entry.content ? `<p>${escapeHtml(entry.content)}</p>` : ''}
+        ${entry.metadata?.photo_url ? `<div class="journal-photo-thumb"><img src="${entry.metadata.photo_url}" alt="Journal photo"></div>` : ''}
         ${renderMetadata(entry)}
       </div>
       <div class="journal-card-meta">
         <span>Added ${formatDate(entry.created_at, true)}</span>
         <div class="journal-card-actions">
-          <button onclick="editEntry('${entry.id}')" title="Edit">✏️</button>
-          <button class="delete" onclick="confirmDelete('${entry.id}')" title="Delete">🗑️</button>
+          <button data-edit="${entry.id}" title="Edit">✏️</button>
+          <button class="delete" data-delete="${entry.id}" title="Delete">🗑️</button>
         </div>
       </div>
     </div>
   `).join('');
+
+  // Attach event listeners (CSP blocks inline handlers)
+  container.querySelectorAll('[data-edit]').forEach(btn => {
+    btn.addEventListener('click', () => editEntry(btn.dataset.edit));
+  });
+  container.querySelectorAll('[data-delete]').forEach(btn => {
+    btn.addEventListener('click', () => confirmDelete(btn.dataset.delete));
+  });
 }
 
 // Render metadata based on entry type
@@ -168,6 +178,27 @@ function initModals() {
   cancelDeleteBtn?.addEventListener('click', closeDeleteModal);
   deleteModal?.querySelector('.modal-overlay')?.addEventListener('click', closeDeleteModal);
   confirmDeleteBtn?.addEventListener('click', handleDelete);
+
+  // Journal photo upload
+  const journalPhotoArea = document.getElementById('journal-photo-area');
+  const journalPhotoInput = document.getElementById('journal-photo-input');
+
+  journalPhotoArea?.addEventListener('click', () => journalPhotoInput?.click());
+  journalPhotoInput?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      showError('entry-form-error', 'Photo must be under 5MB');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      journalPhotoData = event.target.result;
+      const preview = document.getElementById('journal-photo-preview');
+      preview.innerHTML = `<img src="${journalPhotoData}" alt="Journal photo">`;
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 // Initialize type-specific fields
@@ -195,10 +226,17 @@ function updateTypeFields(type) {
 function openNewEntryModal() {
   isEditing = false;
   selectedEntryId = null;
+  journalPhotoData = null;
 
   document.getElementById('modal-title').textContent = 'New Journal Entry';
   document.getElementById('entry-form').reset();
   document.getElementById('entry-date').value = getTodayFormatted();
+
+  // Reset photo preview
+  const preview = document.getElementById('journal-photo-preview');
+  if (preview) {
+    preview.innerHTML = '<span class="photo-placeholder">📷</span><span>Attach Photo</span>';
+  }
 
   // Hide type-specific fields
   document.querySelectorAll('.type-fields').forEach(el => {
@@ -215,6 +253,11 @@ function editEntry(id) {
 
   isEditing = true;
   selectedEntryId = id;
+  journalPhotoData = null;
+
+  // Reset file input to avoid stale state
+  const photoInput = document.getElementById('journal-photo-input');
+  if (photoInput) photoInput.value = '';
 
   document.getElementById('modal-title').textContent = 'Edit Journal Entry';
   document.getElementById('entry-id').value = entry.id;
@@ -223,6 +266,14 @@ function editEntry(id) {
   document.getElementById('entry-date').value = formatDateForInput(entry.entry_date);
   document.getElementById('entry-title').value = entry.title || '';
   document.getElementById('entry-content').value = entry.content || '';
+
+  // Show existing photo if available
+  const preview = document.getElementById('journal-photo-preview');
+  if (entry.metadata?.photo_url) {
+    preview.innerHTML = `<img src="${entry.metadata.photo_url}" alt="Journal photo">`;
+  } else {
+    preview.innerHTML = '<span class="photo-placeholder">📷</span><span>Attach Photo</span>';
+  }
 
   // Show/populate type-specific fields
   updateTypeFields(entry.entry_type);
@@ -246,11 +297,20 @@ function closeEntryModal() {
 }
 
 // Handle entry submit
-async function handleEntrySubmit(e) {
-  e.preventDefault();
+async function handleEntrySubmit(evt) {
+  evt.preventDefault();
   clearError('entry-form-error');
 
   const type = document.getElementById('entry-type').value;
+
+  // Preserve existing metadata when editing
+  let existingMetadata = {};
+  if (isEditing && selectedEntryId) {
+    const existingEntry = allEntries.find(entry => entry.id === selectedEntryId);
+    if (existingEntry?.metadata) {
+      existingMetadata = { ...existingEntry.metadata };
+    }
+  }
 
   const entryData = {
     pet_id: document.getElementById('entry-pet').value,
@@ -258,18 +318,30 @@ async function handleEntrySubmit(e) {
     entry_date: document.getElementById('entry-date').value,
     title: document.getElementById('entry-title').value || null,
     content: document.getElementById('entry-content').value || null,
-    metadata: {}
+    metadata: { ...existingMetadata }
   };
 
   // Add type-specific metadata
   if (type === 'weight') {
     const weight = document.getElementById('weight-value').value;
     if (weight) entryData.metadata.weight = parseFloat(weight);
+    else delete entryData.metadata.weight;
   } else if (type === 'medication') {
     const medName = document.getElementById('medication-name').value;
     const medDose = document.getElementById('medication-dose').value;
     if (medName) entryData.metadata.medication_name = medName;
     if (medDose) entryData.metadata.dosage = medDose;
+  }
+
+  // Upload photo if selected
+  if (journalPhotoData) {
+    try {
+      const uploadResult = await uploadApi.upload(journalPhotoData, `journal-${Date.now()}.jpg`);
+      entryData.metadata.photo_url = uploadResult.url;
+    } catch (uploadError) {
+      console.error('Photo upload failed:', uploadError);
+      // Continue without photo
+    }
   }
 
   try {

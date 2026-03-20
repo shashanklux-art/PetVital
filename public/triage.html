@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Symptom Check | PetVital</title>
+  <title>Symptom Check | Pet Parent</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
     <div class="container">
       <a href="/dashboard.html" class="logo">
         <span class="logo-icon">🐾</span>
-        PetVital
+        Pet Parent
       </a>
       <nav class="nav nav-app">
         <a href="/dashboard.html" class="nav-link">Dashboard</a>
@@ -23,6 +23,7 @@
         <a href="/history.html" class="nav-link">History</a>
         <a href="/journal.html" class="nav-link">Journal</a>
         <a href="/vets.html" class="nav-link">Find Vets</a>
+        <a href="/chat.html" class="nav-link">Pet Chat</a>
         <button class="btn btn-secondary btn-small" id="logout-btn">Log Out</button>
       </nav>
       <button class="mobile-menu-btn" id="mobile-menu-btn">
@@ -39,6 +40,7 @@
     <a href="/history.html" class="nav-link">History</a>
     <a href="/journal.html" class="nav-link">Journal</a>
     <a href="/vets.html" class="nav-link">Find Vets</a>
+    <a href="/chat.html" class="nav-link">Pet Chat</a>
     <button class="btn btn-secondary btn-full" id="mobile-logout-btn">Log Out</button>
   </nav>
 
@@ -84,6 +86,18 @@
       <!-- Step 2: Symptoms -->
       <div id="step-2" class="triage-step card" style="display: none;">
         <h2>What symptoms is <span id="pet-name-display"></span> showing?</h2>
+
+        <div class="free-text-section">
+          <div class="form-group">
+            <label for="free-text">Tell us what's going on</label>
+            <textarea id="free-text" rows="4" placeholder="Describe what you're noticing in your own words... For example: 'My dog has been limping since yesterday and won't eat his food. He also seems more tired than usual.'"></textarea>
+            <span class="form-hint">Describe your pet's symptoms in your own words. You can also select specific symptoms below.</span>
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <span class="divider-text">and/or select specific symptoms</span>
+        </div>
 
         <div class="symptoms-categories" id="symptoms-categories">
           <!-- Categories populated by JS -->

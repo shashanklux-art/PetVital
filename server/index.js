@@ -12,6 +12,8 @@ const triageRoutes = require('./routes/triage');
 const journalRoutes = require('./routes/journal');
 const vetsRoutes = require('./routes/vets');
 const exportRoutes = require('./routes/export');
+const uploadRoutes = require('./routes/upload');
+const chatRoutes = require('./routes/chat');
 
 const app = express();
 
@@ -26,14 +28,14 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
       styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
       fontSrc: ["'self'", "fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'", process.env.SUPABASE_URL || "https://*.supabase.co"]
+      imgSrc: ["'self'", "data:", "blob:", "https:"],
+      connectSrc: ["'self'"]
     }
   }
 }));
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 // Rate limiting (disabled validation for serverless compatibility)
 const apiLimiter = rateLimit({
@@ -47,6 +49,13 @@ const triageLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: process.env.LOCAL_MODE === 'true' ? 100 : 20,
   message: { error: 'Triage limit reached. Please try again later.' },
+  validate: false
+});
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: process.env.LOCAL_MODE === 'true' ? 200 : 50,
+  message: { error: 'Chat limit reached. Please try again later.' },
   validate: false
 });
 
@@ -66,6 +75,8 @@ app.use('/api/triage', triageRoutes);
 app.use('/api/journal', journalRoutes);
 app.use('/api/vets', vetsRoutes);
 app.use('/api/export', exportRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/chat', chatLimiter, chatRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -92,7 +103,7 @@ module.exports = app;
 if (require.main === module) {
   const PORT = config.port;
   app.listen(PORT, () => {
-    console.log(`PetVital server running on port ${PORT}`);
+    console.log(`Pet Parent server running on port ${PORT}`);
     console.log(`Visit http://localhost:${PORT}`);
   });
 }

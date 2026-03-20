@@ -53,7 +53,7 @@ GUIDELINES FOR RESPONSES:
 - For nutrition: suggest bland diet options specific to the species
 - Always emphasize that home care is supportive, not curative`;
 
-async function assessSymptoms(pet, symptoms, duration, severity, notes) {
+async function assessSymptoms(pet, symptoms, duration, severity, notes, free_text) {
   const userPrompt = `
 Pet Information:
 - Species: ${pet.species}
@@ -62,9 +62,17 @@ Pet Information:
 - Weight: ${pet.weight_kg || 'Unknown'} kg
 - Known Conditions: ${pet.known_conditions?.join(', ') || 'None'}
 - Current Medications: ${pet.medications?.join(', ') || 'None'}
+- Diet: ${pet.diet || 'Unknown'}
+- Spayed/Neutered: ${pet.is_fixed || 'Unknown'}
+- Last Vet Visit: ${pet.last_vet_visit || 'Unknown'}
+- Recent Vaccines: ${pet.recent_vaccines || 'None'}
+- Indoor/Outdoor: ${pet.indoor_outdoor || 'Unknown'}
+- Supplements: ${pet.supplements || 'None'}
+- Travel History: ${pet.travel_history || 'None'}
+- Recent Procedures: ${pet.recent_procedures || 'None'}
 
-Current Symptoms:
-${symptoms.map(s => `- ${s}`).join('\n')}
+${free_text ? `Owner's Description:\n${free_text}\n\n` : ''}Current Symptoms:
+${symptoms && symptoms.length > 0 ? symptoms.map(s => `- ${s}`).join('\n') : 'No specific symptoms selected'}
 
 Duration: ${duration}
 Severity: ${severity}

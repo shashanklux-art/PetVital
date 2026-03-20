@@ -71,7 +71,7 @@ function renderHistory(history) {
     const date = formatDate(item.created_at, true);
 
     return `
-      <div class="history-card" onclick="showHistoryDetail('${item.id}')">
+      <div class="history-card" data-history-id="${item.id}" style="cursor:pointer">
         <div class="history-card-header">
           <span class="urgency-badge urgency-${item.urgency_level}">${item.urgency_level}</span>
           <span class="history-date">${date}</span>
@@ -84,6 +84,10 @@ function renderHistory(history) {
       </div>
     `;
   }).join('');
+
+  container.querySelectorAll('[data-history-id]').forEach(el => {
+    el.addEventListener('click', () => showHistoryDetail(el.dataset.historyId));
+  });
 }
 
 // Initialize filters
@@ -190,10 +194,13 @@ function showHistoryDetail(id) {
     ` : ''}
 
     <div class="form-actions">
-      <button class="btn btn-secondary" onclick="closeModal()">Close</button>
-      <button class="btn btn-primary" onclick="downloadTriagePdf('${item.id}')">Download PDF</button>
+      <button class="btn btn-secondary" id="detail-close-btn">Close</button>
+      <button class="btn btn-primary" id="detail-download-btn">Download PDF</button>
     </div>
   `;
+
+  container.querySelector('#detail-close-btn').addEventListener('click', closeModal);
+  container.querySelector('#detail-download-btn').addEventListener('click', () => downloadTriagePdf(item.id));
 
   document.getElementById('history-modal').classList.add('active');
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | PetVital</title>
+  <title>Dashboard | Pet Parent</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/components.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,7 @@
     <div class="container">
       <a href="/dashboard.html" class="logo">
         <span class="logo-icon">🐾</span>
-        PetVital
+        Pet Parent
       </a>
       <nav class="nav nav-app">
         <a href="/dashboard.html" class="nav-link active">Dashboard</a>
@@ -23,6 +23,7 @@
         <a href="/history.html" class="nav-link">History</a>
         <a href="/journal.html" class="nav-link">Journal</a>
         <a href="/vets.html" class="nav-link">Find Vets</a>
+        <a href="/chat.html" class="nav-link">Pet Chat</a>
         <button class="btn btn-secondary btn-small" id="logout-btn">Log Out</button>
       </nav>
       <button class="mobile-menu-btn" id="mobile-menu-btn">
@@ -39,6 +40,7 @@
     <a href="/history.html" class="nav-link">History</a>
     <a href="/journal.html" class="nav-link">Journal</a>
     <a href="/vets.html" class="nav-link">Find Vets</a>
+    <a href="/chat.html" class="nav-link">Pet Chat</a>
     <button class="btn btn-secondary btn-full" id="mobile-logout-btn">Log Out</button>
   </nav>
 
@@ -49,12 +51,17 @@
         <p class="dashboard-date" id="current-date"></p>
       </div>
 
-      <div class="dashboard-cta">
-        <div class="cta-content">
-          <h2>Check Your Pet's Symptoms</h2>
+      <div class="dashboard-cta-split">
+        <a href="/add-pet.html" class="cta-card cta-primary">
+          <div class="cta-icon">➕</div>
+          <h2>Add a Pet</h2>
+          <p>Register your pet to get started with health tracking</p>
+        </a>
+        <a href="/triage.html" class="cta-card cta-secondary">
+          <div class="cta-icon">🩺</div>
+          <h2>Check Symptoms</h2>
           <p>Get an AI-powered assessment of your pet's health</p>
-        </div>
-        <a href="/triage.html" class="btn btn-white btn-large">Check Symptoms Now</a>
+        </a>
       </div>
 
       <section class="dashboard-section">
@@ -92,6 +99,32 @@
           <div class="loading-state">
             <div class="spinner"></div>
             <p>Loading journal...</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-section">
+        <div class="section-header">
+          <h2>Coming Soon</h2>
+        </div>
+        <div class="coming-soon-grid">
+          <div class="coming-soon-card">
+            <div class="coming-soon-badge">Coming Soon</div>
+            <div class="coming-soon-icon">💬</div>
+            <h3>Pet Parent Forum</h3>
+            <p>Connect with other pet parents, share experiences, and get community advice.</p>
+          </div>
+          <div class="coming-soon-card">
+            <div class="coming-soon-badge">Coming Soon</div>
+            <div class="coming-soon-icon">📍</div>
+            <h3>Pet-Friendly Places</h3>
+            <p>Discover pet-friendly restaurants, parks, hotels, and more near you.</p>
+          </div>
+          <div class="coming-soon-card">
+            <div class="coming-soon-badge">Coming Soon</div>
+            <div class="coming-soon-icon">🏷️</div>
+            <h3>Deals & Recommendations</h3>
+            <p>Curated product recommendations and exclusive deals for your pets.</p>
           </div>
         </div>
       </section>

@@ -184,6 +184,35 @@ const SYMPTOMS = {
       'Pale gums',
       'Blue tongue or gums',
       'Unconscious'
+    ],
+    'Dental/Oral': [
+      'Bad breath',
+      'Excessive drooling',
+      'Difficulty chewing',
+      'Bleeding gums',
+      'Loose teeth',
+      'Pawing at mouth',
+      'Swollen face/jaw'
+    ],
+    'Pain': [
+      'Crying when touched',
+      'Guarding body part',
+      'Trembling/shaking',
+      'Reluctance to be picked up',
+      'Arched back',
+      'Grinding teeth'
+    ],
+    'Weight Changes': [
+      'Unexplained weight loss',
+      'Rapid weight gain',
+      'Visible ribs/spine',
+      'Pot-bellied appearance'
+    ],
+    'Reproductive': [
+      'Vaginal swelling/discharge',
+      'Testicular enlargement',
+      'Swollen mammary glands',
+      'Unusual nipple discharge'
     ]
   },
   cat: {
@@ -251,6 +280,35 @@ const SYMPTOMS = {
       'Pale gums',
       'Difficulty breathing',
       'Unconscious'
+    ],
+    'Dental/Oral': [
+      'Bad breath',
+      'Excessive drooling',
+      'Difficulty chewing',
+      'Bleeding gums',
+      'Loose teeth',
+      'Pawing at mouth',
+      'Swollen face/jaw'
+    ],
+    'Pain': [
+      'Crying when touched',
+      'Guarding body part',
+      'Trembling/shaking',
+      'Reluctance to be picked up',
+      'Arched back',
+      'Grinding teeth'
+    ],
+    'Weight Changes': [
+      'Unexplained weight loss',
+      'Rapid weight gain',
+      'Visible ribs/spine',
+      'Pot-bellied appearance'
+    ],
+    'Reproductive': [
+      'Vaginal swelling/discharge',
+      'Testicular enlargement',
+      'Swollen mammary glands',
+      'Unusual nipple discharge'
     ]
   }
 };
